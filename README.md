@@ -1,7 +1,7 @@
 # 🤖 Google ADK + Chainlit: Build an AI Geolocation Agent
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Made with Google ADK](https://img.shields.io/badge/Made%20with-Google%20ADK-blue)](https://cloud.google.com/adk)
+[![Made with Google ADK](https://img.shields.io/badge/Made%20with-Google%20ADK-blue)](https://google.github.io/adk-docs/)
 [![Built with Chainlit](https://img.shields.io/badge/Built%20with-Chainlit-pink)](https://chainlit.io)
 
 Learn how to build an intelligent AI agent using Google's AI Development Kit (ADK) - a powerful framework for developing AI agents - combined with Chainlit's modern chat interface. This tutorial demonstrates agent development by creating a geolocation assistant that converts coordinates into location names. Perfect for developers getting started with AI agent development! 🚀
