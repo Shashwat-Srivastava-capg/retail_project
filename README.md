@@ -124,7 +124,7 @@ This project is open-source and free to use. You are welcome to use, modify, and
 
 ## Acknowledgments 🙏
 
-- [Google ADK](https://cloud.google.com/adk) for the AI capabilities
+- [Google ADK](https://google.github.io/adk-docs/) for the AI capabilities
 - [Chainlit](https://chainlit.io) for the chat interface
 - [OpenCage](https://opencagedata.com/) for the geocoding service
 
