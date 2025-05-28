@@ -106,7 +106,7 @@ The application leverages two main components:
 
 ## Contributing 🤝
 
-This is an open educational project, and contributions are highly encouraged! Whether you're fixing bugs, improving documentation, or adding new features, your help is welcome.
+This is an open educational project, and contributions are highly encouraged! Whether you're improving documentation, or adding new features, your help is welcome.
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/YourFeature`)
