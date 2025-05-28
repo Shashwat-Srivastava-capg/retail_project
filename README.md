@@ -44,8 +44,8 @@ Before running this application, make sure you have:
 
 1. Clone the repository:
 ```bash
-git clone <your-repository-url>
-cd geolocation_agent
+git clone git@github.com:Ngoga-Musagi/building-ai-agents-with-adk.git
+cd building-ai-agents-with-adk
 ```
 
 2. Create and activate a virtual environment (recommended):
@@ -65,12 +65,7 @@ pip install -r requirements.txt
 ```
 
 4. Create a `.env` file in the project root and add your API keys:
-```env
-OPENCAGE_API_KEY=your_opencage_api_key_here
-GOOGLE_APPLICATION_CREDENTIALS=path/to/your/google/credentials.json
-GOOGLE_CLOUD_PROJECT=your-project-id
-GOOGLE_ADK_MODEL=gemini-1.5-flash  # or gemini-2.0-pro if available
-```
+
 
 ## Usage 💡
 
