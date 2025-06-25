@@ -21,12 +21,22 @@ from agent import root_agent
 import asyncio
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
+from google.adk.artifacts import InMemoryArtifactService
 from google.genai import types
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+google_cloud_project=os.getenv("GOOGLE_CLOUD_PROJECT")
+google_cloud_location=os.getenv("GOOGLE_CLOUD_LOCATION")
+google_genai_use_vertexai=os.getenv("GOOGLE_GENAI_USE_VERTEXAI","1")
+model_name=os.getenv("MODEL")
 
 # Set up session service and runner
 session_service = InMemorySessionService()
+artifact_service = InMemoryArtifactService()
 APP_NAME = "geolocation_app"
-runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
+runner = Runner(agent=root_agent, artifact_service=artifact_service, app_name=APP_NAME, session_service=session_service)
 
 @cl.on_chat_start
 async def start():

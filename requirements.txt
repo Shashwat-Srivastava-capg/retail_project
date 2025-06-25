@@ -2,3 +2,15 @@ google-adk
 chainlit
 python-dotenv
 requests
+langchain_google_community
+langchain_google_vertexai
+typing
+google
+google-cloud-bigquery
+pandas
+db-dtypes
+tabulate
+matplotlib
+gevent==23.9.1
+Cython==0.29.36
+seaborn

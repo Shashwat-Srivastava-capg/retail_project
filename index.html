@@ -1,0 +1,528 @@
+<html><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com"></script><script>
+          tailwind.config = {
+            theme: {
+              extend: {
+                fontFamily: {
+                  sans: ['Inter', 'sans-serif']
+                }
+              }
+            }
+          };
+        </script>
+    <script>window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script crossorigin="anonymous" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <style>
+            ::webkit-scrollbar { display: none;}
+            body { font-family: 'Inter', sans-serif; }
+        </style>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;500;600;700;800;900&amp;display=swap" rel="stylesheet"/><style>
+      .highlighted-section {
+        outline: 2px solid #3F20FB;
+        background-color: rgba(63, 32, 251, 0.1);
+      }
+    
+      .edit-button {
+        position: absolute;
+        z-index: 1000;
+      }
+    
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    
+      html, body {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      </style></head>
+    <body class="bg-gray-50">
+    <!-- Sidebar -->
+    <div class="fixed left-0 top-0 w-64 h-full bg-white border-r border-gray-200 z-30" id="sidebar">
+    <div class="p-6">
+    <div class="flex items-center space-x-3 mb-8">
+    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+    <i class="fas fa-chart-line text-white text-sm"></i>
+    </div>
+    <h1 class="text-xl font-bold text-gray-900">RetailAI</h1>
+    </div>
+    <nav class="space-y-2" id="sidebar-nav">
+    <span class="flex items-center space-x-3 px-3 py-2 bg-blue-50 text-blue-700 rounded-lg cursor-pointer">
+    <i class="fas fa-home text-sm"></i>
+    <span class="font-medium">Dashboard</span>
+    </span>
+    <span class="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
+    <i class="fas fa-snowflake text-sm"></i>
+    <span>Seasonal Intelligence</span>
+    </span>
+    <span class="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
+    <i class="fas fa-tags text-sm"></i>
+    <span>Promotions</span>
+    </span>
+    <span class="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
+    <i class="fas fa-users text-sm"></i>
+    <span>Segments</span>
+    </span>
+    <span class="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
+    <i class="fas fa-boxes text-sm"></i>
+    <span>Inventory</span>
+    </span>
+    <span class="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
+    <i class="fas fa-chart-bar text-sm"></i>
+    <span>Reports</span>
+    </span>
+    </nav>
+    <div class="mt-8" id="saved-queries">
+    <h3 class="text-sm font-medium text-gray-500 mb-3">Saved Queries</h3>
+    <div class="space-y-2">
+    <div class="p-2 bg-gray-50 rounded text-xs text-gray-600 cursor-pointer hover:bg-gray-100">
+                        Top SKUs in Bangalore Q3
+                    </div>
+    <div class="p-2 bg-gray-50 rounded text-xs text-gray-600 cursor-pointer hover:bg-gray-100">
+                        Monsoon impact analysis
+                    </div>
+    </div>
+    </div>
+    <div class="absolute bottom-6 left-6 right-6" id="sidebar-settings">
+    <span class="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
+    <i class="fas fa-cog text-sm"></i>
+    <span>Settings</span>
+    </span>
+    </div>
+    </div>
+    </div>
+    <!-- Main Content -->
+    <div class="ml-64 min-h-screen" id="main-content">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 px-6 py-4" id="header">
+    <div class="flex items-center justify-between">
+    <div>
+    <h2 class="text-2xl font-bold text-gray-900">Executive Dashboard</h2>
+    <p class="text-sm text-gray-500">Real-time insights and AI-surfaced priorities</p>
+    </div>
+    <div class="flex items-center space-x-4">
+    <div class="relative">
+    <i class="fas fa-bell text-gray-400"></i>
+    <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+    </div>
+    <img alt="Profile" class="w-8 h-8 rounded-full" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"/>
+    </div>
+    </div>
+    </header>
+    <!-- Executive Summary Section -->
+    <section class="p-6" id="executive-summary">
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-4 gap-6 mb-8" id="kpi-cards">
+    <div class="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-sm font-medium text-gray-500">Sales</h3>
+    <i class="fas fa-arrow-up text-green-500 text-sm"></i>
+    </div>
+    <div class="text-3xl font-bold text-gray-900 mb-1">₹2.4M</div>
+    <div class="text-sm text-green-600">+12.5% vs last week</div>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-sm font-medium text-gray-500">Gross Margin</h3>
+    <i class="fas fa-arrow-down text-red-500 text-sm"></i>
+    </div>
+    <div class="text-3xl font-bold text-gray-900 mb-1">34.2%</div>
+    <div class="text-sm text-red-600">-2.1% vs last week</div>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-sm font-medium text-gray-500">Inventory Turnover</h3>
+    <i class="fas fa-arrow-up text-green-500 text-sm"></i>
+    </div>
+    <div class="text-3xl font-bold text-gray-900 mb-1">8.7x</div>
+    <div class="text-sm text-green-600">+5.2% vs last week</div>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-sm font-medium text-gray-500">Promo ROI</h3>
+    <i class="fas fa-arrow-up text-green-500 text-sm"></i>
+    </div>
+    <div class="text-3xl font-bold text-gray-900 mb-1">3.2x</div>
+    <div class="text-sm text-green-600">+18.3% vs last week</div>
+    </div>
+    </div>
+    <!-- AI Highlights and Alerts -->
+    <div class="grid grid-cols-2 gap-6 mb-8">
+    <!-- AI Highlights Panel -->
+    <div class="bg-white p-6 rounded-xl border border-gray-100" id="ai-highlights">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-gray-900">3 Things You Should Know Today</h3>
+    <button class="text-blue-600 text-sm hover:underline">View All Insights</button>
+    </div>
+    <div class="space-y-4">
+    <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg cursor-pointer hover:bg-blue-100">
+    <i class="fas fa-lightbulb text-blue-600 mt-1"></i>
+    <div class="flex-1">
+    <p class="text-sm text-gray-800">Winter apparel sales in Nordic countries surged 24% due to early cold front</p>
+    <button class="text-blue-600 text-xs mt-1 hover:underline">Drill Down → Nordic Markets</button>
+    </div>
+    </div>
+    <div class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg cursor-pointer hover:bg-green-100">
+    <i class="fas fa-chart-line text-green-600 mt-1"></i>
+    <div class="flex-1">
+    <p class="text-sm text-gray-800">Electronics clearance in Germany showing 31% better margins than UK</p>
+    <button class="text-green-600 text-xs mt-1 hover:underline">Drill Down → DACH Analysis</button>
+    </div>
+    </div>
+    <div class="flex items-start space-x-3 p-3 bg-orange-50 rounded-lg cursor-pointer hover:bg-orange-100">
+    <i class="fas fa-exclamation-triangle text-orange-600 mt-1"></i>
+    <div class="flex-1">
+    <p class="text-sm text-gray-800">Fashion inventory in French metropolitan stores requires rebalancing</p>
+    <button class="text-orange-600 text-xs mt-1 hover:underline">Drill Down → France Operations</button>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- Alerts & Anomalies -->
+    <div class="bg-white p-6 rounded-xl border border-gray-100" id="alerts-anomalies">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-gray-900">Regional Alerts &amp; Anomalies</h3>
+    <div class="flex space-x-2">
+    <span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded">Critical</span>
+    <button class="text-gray-500 text-sm hover:underline">Filter by Region</button>
+    </div>
+    </div>
+    <div class="space-y-3">
+    <div class="flex items-center justify-between p-3 border border-red-200 rounded-lg hover:bg-red-50 cursor-pointer">
+    <div class="flex items-center space-x-3">
+    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+    <div>
+    <p class="text-sm font-medium text-gray-900">Stock-out Alert: Netherlands</p>
+    <p class="text-xs text-gray-500">Home &amp; Garden • Amsterdam, Rotterdam</p>
+    </div>
+    </div>
+    <button class="text-red-600 text-sm hover:underline">Investigate →</button>
+    </div>
+    <div class="flex items-center justify-between p-3 border border-yellow-200 rounded-lg hover:bg-yellow-50 cursor-pointer">
+    <div class="flex items-center space-x-3">
+    <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+    <div>
+    <p class="text-sm font-medium text-gray-900">Demand Spike: Spain</p>
+    <p class="text-xs text-gray-500">Sports &amp; Outdoor • Madrid, Barcelona</p>
+    </div>
+    </div>
+    <button class="text-yellow-600 text-sm hover:underline">Investigate →</button>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+    <!-- Interactive Visuals Section -->
+    <section class="px-6 pb-6" id="interactive-visuals">
+    <div class="mb-4">
+    <h2 class="text-xl font-bold text-gray-900">European Market Intelligence</h2>
+    <p class="text-sm text-gray-500">Regional performance patterns and emerging trends</p>
+    </div>
+    <div class="grid grid-cols-3 gap-6 mb-8">
+    <!-- Seasonality Heatmap -->
+    <div class="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow cursor-pointer" id="seasonality-heatmap">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-gray-900">Category Performance by Region</h3>
+    <button class="text-blue-600 text-sm hover:underline">Expand View →</button>
+    </div>
+    <div class="space-y-2 text-xs">
+    <div class="grid grid-cols-5 gap-1">
+    <div class="text-gray-500 font-medium">Region</div>
+    <div class="text-center font-medium text-gray-500">Fashion</div>
+    <div class="text-center font-medium text-gray-500">Electronics</div>
+    <div class="text-center font-medium text-gray-500">Home</div>
+    <div class="text-center font-medium text-gray-500">Sports</div>
+    </div>
+    <div class="grid grid-cols-5 gap-1 items-center">
+    <div class="text-gray-700 font-medium">UK</div>
+    <div class="h-6 bg-green-400 rounded hover:bg-green-500 cursor-pointer"></div>
+    <div class="h-6 bg-blue-300 rounded hover:bg-blue-400 cursor-pointer"></div>
+    <div class="h-6 bg-yellow-300 rounded hover:bg-yellow-400 cursor-pointer"></div>
+    <div class="h-6 bg-green-500 rounded hover:bg-green-600 cursor-pointer"></div>
+    </div>
+    <div class="grid grid-cols-5 gap-1 items-center">
+    <div class="text-gray-700 font-medium">Germany</div>
+    <div class="h-6 bg-blue-400 rounded hover:bg-blue-500 cursor-pointer"></div>
+    <div class="h-6 bg-green-500 rounded hover:bg-green-600 cursor-pointer"></div>
+    <div class="h-6 bg-green-300 rounded hover:bg-green-400 cursor-pointer"></div>
+    <div class="h-6 bg-blue-300 rounded hover:bg-blue-400 cursor-pointer"></div>
+    </div>
+    <div class="grid grid-cols-5 gap-1 items-center">
+    <div class="text-gray-700 font-medium">France</div>
+    <div class="h-6 bg-green-500 rounded hover:bg-green-600 cursor-pointer"></div>
+    <div class="h-6 bg-yellow-400 rounded hover:bg-yellow-500 cursor-pointer"></div>
+    <div class="h-6 bg-red-300 rounded hover:bg-red-400 cursor-pointer"></div>
+    <div class="h-6 bg-green-400 rounded hover:bg-green-500 cursor-pointer"></div>
+    </div>
+    <div class="grid grid-cols-5 gap-1 items-center">
+    <div class="text-gray-700 font-medium">Nordics</div>
+    <div class="h-6 bg-red-400 rounded hover:bg-red-500 cursor-pointer"></div>
+    <div class="h-6 bg-blue-400 rounded hover:bg-blue-500 cursor-pointer"></div>
+    <div class="h-6 bg-green-500 rounded hover:bg-green-600 cursor-pointer"></div>
+    <div class="h-6 bg-green-600 rounded hover:bg-green-700 cursor-pointer"></div>
+    </div>
+    </div>
+    <div class="mt-4 flex items-center justify-between text-xs text-gray-500">
+    <span>Underperforming</span>
+    <button class="text-blue-600 hover:underline">View SKU Details</button>
+    <span>Outperforming</span>
+    </div>
+    </div>
+    <!-- Event Timeline -->
+    <div class="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow cursor-pointer" id="event-timeline">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-gray-900">European Seasonal Events</h3>
+    <button class="text-blue-600 text-sm hover:underline">Timeline View →</button>
+    </div>
+    <div class="relative mb-4">
+    <div class="h-2 bg-gray-200 rounded-full"></div>
+    <div class="flex justify-between items-center mt-2">
+    <div class="text-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+    <i class="fas fa-snowflake text-blue-500 mb-1"></i>
+    <p class="text-xs text-gray-600">Winter Sales</p>
+    <p class="text-xs text-blue-600">Jan-Feb</p>
+    </div>
+    <div class="text-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+    <i class="fas fa-heart text-red-500 mb-1"></i>
+    <p class="text-xs text-gray-600">Valentine's</p>
+    <p class="text-xs text-red-600">Feb 14</p>
+    </div>
+    <div class="text-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+    <i class="fas fa-sun text-yellow-500 mb-1"></i>
+    <p class="text-xs text-gray-600">Summer</p>
+    <p class="text-xs text-yellow-600">Jun-Aug</p>
+    </div>
+    <div class="text-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+    <i class="fas fa-gift text-green-500 mb-1"></i>
+    <p class="text-xs text-gray-600">Black Friday</p>
+    <p class="text-xs text-green-600">Nov 29</p>
+    </div>
+    </div>
+    </div>
+    <div style="height: 80px;">
+    <canvas id="timeline-chart"></canvas>
+    </div>
+    <button class="w-full mt-3 py-2 bg-blue-50 text-blue-600 text-sm rounded hover:bg-blue-100">Analyze Event Impact</button>
+    </div>
+    <!-- Trend Radar -->
+    <div class="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow cursor-pointer" id="trend-radar">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-gray-900">Growth vs Popularity Matrix</h3>
+    <button class="text-blue-600 text-sm hover:underline">Detailed Analysis →</button>
+    </div>
+    <div class="relative" style="height: 140px;">
+    <canvas id="radar-chart"></canvas>
+    </div>
+    <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+    <button class="py-1 bg-green-50 text-green-600 rounded hover:bg-green-100">Rising Stars</button>
+    <button class="py-1 bg-blue-50 text-blue-600 rounded hover:bg-blue-100">Market Leaders</button>
+    </div>
+    </div>
+    </div>
+    </section>
+    <!-- Actionable Modules Section -->
+    <section class="px-6 pb-8" id="actionable-modules">
+    <div class="mb-4">
+    <h2 class="text-xl font-bold text-gray-900">Strategic Actions</h2>
+    <p class="text-sm text-gray-500">AI-powered recommendations and planning tools</p>
+    </div>
+    <div class="grid grid-cols-2 gap-6 mb-6">
+    <!-- Promotion Planner -->
+    <div class="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow" id="promotion-planner">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-gray-900">European Campaign Planner</h3>
+    <button class="text-blue-600 text-sm hover:underline">Calendar View →</button>
+    </div>
+    <div class="space-y-3">
+    <div class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+    <div class="flex items-center justify-between mb-2">
+    <span class="text-sm font-medium text-gray-900">UK Winter Clearance</span>
+    <span class="text-xs text-green-600">+18% uplift</span>
+    </div>
+    <p class="text-xs text-gray-500 mb-2">Target: Fashion • Budget: £75K • London, Manchester</p>
+    <button class="w-full py-2 bg-blue-50 text-blue-600 text-xs rounded hover:bg-blue-100">Simulate Impact →</button>
+    </div>
+    <div class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+    <div class="flex items-center justify-between mb-2">
+    <span class="text-sm font-medium text-gray-900">DACH Electronics Sale</span>
+    <span class="text-xs text-green-600">+25% uplift</span>
+    </div>
+    <p class="text-xs text-gray-500 mb-2">Target: Tech Enthusiasts • Budget: €95K • Berlin, Munich</p>
+    <button class="w-full py-2 bg-blue-50 text-blue-600 text-xs rounded hover:bg-blue-100">Simulate Impact →</button>
+    </div>
+    <div class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+    <div class="flex items-center justify-between mb-2">
+    <span class="text-sm font-medium text-gray-900">Nordic Summer Prep</span>
+    <span class="text-xs text-orange-600">+12% uplift</span>
+    </div>
+    <p class="text-xs text-gray-500 mb-2">Target: Outdoor Sports • Budget: €45K • Stockholm, Oslo</p>
+    <button class="w-full py-2 bg-blue-50 text-blue-600 text-xs rounded hover:bg-blue-100">Simulate Impact →</button>
+    </div>
+    </div>
+    </div>
+    <!-- Inventory Optimizer -->
+    <div class="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow" id="inventory-optimizer">
+    <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-gray-900">European Stock Optimizer</h3>
+    <button class="text-blue-600 text-sm hover:underline">Map View →</button>
+    </div>
+    <div class="mb-4">
+    <div class="grid grid-cols-3 gap-2 text-xs mb-3">
+    <div class="flex items-center space-x-1">
+    <div class="w-3 h-3 bg-red-400 rounded"></div>
+    <span class="text-gray-600">Overstock</span>
+    </div>
+    <div class="flex items-center space-x-1">
+    <div class="w-3 h-3 bg-blue-400 rounded"></div>
+    <span class="text-gray-600">Understock</span>
+    </div>
+    <div class="flex items-center space-x-1">
+    <div class="w-3 h-3 bg-green-400 rounded"></div>
+    <span class="text-gray-600">Optimal</span>
+    </div>
+    </div>
+    <div class="space-y-2">
+    <div class="flex items-center justify-between p-3 border border-gray-200 rounded hover:bg-gray-50 cursor-pointer">
+    <div class="flex items-center space-x-3">
+    <div class="w-4 h-4 bg-red-400 rounded-full"></div>
+    <div>
+    <p class="text-sm font-medium text-gray-900">London Central</p>
+    <p class="text-xs text-gray-500">Fashion excess: 2.3K units</p>
+    </div>
+    </div>
+    <button class="text-red-600 text-xs hover:underline">Reallocate →</button>
+    </div>
+    <div class="flex items-center justify-between p-3 border border-gray-200 rounded hover:bg-gray-50 cursor-pointer">
+    <div class="flex items-center space-x-3">
+    <div class="w-4 h-4 bg-blue-400 rounded-full"></div>
+    <div>
+    <p class="text-sm font-medium text-gray-900">Berlin Mitte</p>
+    <p class="text-xs text-gray-500">Electronics shortage: 1.8K units</p>
+    </div>
+    </div>
+    <button class="text-blue-600 text-xs hover:underline">Reallocate →</button>
+    </div>
+    <div class="flex items-center justify-between p-3 border border-gray-200 rounded hover:bg-gray-50 cursor-pointer">
+    <div class="flex items-center space-x-3">
+    <div class="w-4 h-4 bg-green-400 rounded-full"></div>
+    <div>
+    <p class="text-sm font-medium text-gray-900">Paris Le Marais</p>
+    <p class="text-xs text-gray-500">Optimal balance maintained</p>
+    </div>
+    </div>
+    <button class="text-green-600 text-xs hover:underline">View Details →</button>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- Expanded AI Assistant -->
+    <iframe allow="clipboard-write; microphone" height="800" src="https://8000-cs-deaddb95-1239-4fa0-ae04-6dccfa1fd13e.cs-asia-southeast1-kelp.cloudshell.dev/?authuser=0" style="border: none; background: white;" title="Chainlit Assistant" width="100%"></iframe>
+    </section>
+    </div>
+    <script>
+    // Timeline Chart
+    const timelineCtx = document.getElementById('timeline-chart').getContext('2d');
+    new Chart(timelineCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                data: [65, 78, 85, 92, 88, 95],
+                borderColor: '#3B82F6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { display: false },
+                y: { display: false }
+            }
+        }
+    });
+    
+    // Radar Chart (Growth vs Popularity Matrix)
+    const radarCtx = document.getElementById('radar-chart').getContext('2d');
+    new Chart(radarCtx, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Product Categories',
+                data: [
+                    {x: 85, y: 22, category: 'Apparel - Gen Z', region: 'France', color: '#EF4444'},
+                    {x: 72, y: 18, category: 'Electronics - Premium', region: 'Germany', color: '#3B82F6'},
+                    {x: 91, y: 15, category: 'Home Decor', region: 'UK', color: '#10B981'},
+                    {x: 68, y: 28, category: 'Sports - Outdoor', region: 'Nordics', color: '#F59E0B'},
+                    {x: 78, y: 12, category: 'Beauty - Luxury', region: 'France', color: '#8B5CF6'},
+                    {x: 95, y: 8, category: 'Tech Accessories', region: 'Germany', color: '#06B6D4'}
+                ],
+                backgroundColor: function(context) {
+                    return context.raw.color;
+                },
+                borderColor: function(context) {
+                    return context.raw.color;
+                },
+                pointRadius: 8,
+                pointHoverRadius: 12
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        title: function(context) {
+                            return context[0].raw.category;
+                        },
+                        label: function(context) {
+                            return [
+                                `Region: ${context.raw.region}`,
+                                `Popularity: ${context.raw.x}%`,
+                                `Growth: ${context.raw.y}%`,
+                                'Click to drill down →'
+                            ];
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: { display: true, text: 'Popularity Score' },
+                    min: 60,
+                    max: 100
+                },
+                y: {
+                    title: { display: true, text: 'Growth Rate (%)' },
+                    min: 5,
+                    max: 30
+                }
+            },
+            onClick: function(event, elements) {
+                if (elements.length > 0) {
+                    const dataIndex = elements[0].index;
+                    const category = this.data.datasets[0].data[dataIndex].category;
+                    const region = this.data.datasets[0].data[dataIndex].region;
+                    
+                    // Simulate drill-down action
+                    if (category === 'Apparel - Gen Z' && region === 'France') {
+                        alert(`Drilling down into ${category} in ${region}:\n\n• View detailed sales trends\n• See which SKUs are driving growth\n• Get AI recommendations for bundling\n• Compare with Germany & Spain clusters`);
+                    } else {
+                        alert(`Drilling down into ${category} in ${region}:\n\n• Category performance analysis\n• Regional comparison insights\n• Growth driver identification\n• Strategic recommendations`);
+                    }
+                }
+            }
+        }
+    });
+    </script>
+    </body></html>
